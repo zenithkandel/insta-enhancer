@@ -123,6 +123,14 @@ html.ie-active .ie-chat-item:hover {
     border-color: rgb(var(--ig-separator)) !important;
 }
 
+html.ie-active .ie-chat-row[aria-selected="true"],
+html.ie-active .ie-chat-item[aria-current="page"],
+html.ie-active a[href*="/direct/t/"][aria-current="page"] {
+    background: rgb(var(--ig-highlight-background)) !important;
+    border-color: var(--ie-border-strong) !important;
+    color: rgb(var(--ig-primary-text)) !important;
+}
+
 html.ie-active .ie-composer-area {
     padding-bottom: 10px;
 }
@@ -177,6 +185,33 @@ html.ie-active .ie-bubble--out * {
     color: var(--ie-outgoing-text-color) !important;
 }
 
+/* Direct style fallbacks for Instagram bubble nodes when runtime tagging misses. */
+html.ie-active [role="main"] div[style*="chat-incoming-message-bubble"],
+html.ie-active [role="main"] div[style*="--ig-incoming-message-bubble"] {
+    border-radius: 0 !important;
+    border: 1px solid rgb(var(--ig-separator)) !important;
+    background: var(--chat-incoming-message-bubble-background-color) !important;
+    color: rgb(var(--ig-primary-text)) !important;
+}
+
+html.ie-active [role="main"] div[style*="chat-outgoing-message-bubble"],
+html.ie-active [role="main"] div[style*="--ig-outgoing-message-bubble"] {
+    border-radius: 0 !important;
+    border: 1px solid var(--ie-border-strong) !important;
+    background: var(--chat-outgoing-message-bubble-background-color) !important;
+    color: var(--ie-outgoing-text-color) !important;
+}
+
+html.ie-active [role="main"] div[style*="chat-outgoing-message-bubble"] *,
+html.ie-active [role="main"] div[style*="--ig-outgoing-message-bubble"] * {
+    color: var(--ie-outgoing-text-color) !important;
+}
+
+html.ie-active [role="main"] div[style*="chat-incoming-message-bubble"] *,
+html.ie-active [role="main"] div[style*="--ig-incoming-message-bubble"] * {
+    color: rgb(var(--ig-primary-text)) !important;
+}
+
 html.ie-active .ie-bubble a {
     text-decoration-color: currentColor;
 }
@@ -214,6 +249,15 @@ html.ie-active [role="dialog"] * {
     color: rgb(var(--ig-menu-text-color)) !important;
 }
 
+html.ie-active [role="menu"],
+html.ie-active [role="dialog"],
+html.ie-active [role="dialog"] [style*="background"],
+html.ie-active [role="menu"] [style*="background"] {
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+    opacity: 1 !important;
+}
+
 html.ie-active svg {
     color: rgb(var(--ig-primary-icon)) !important;
     transition: color var(--ie-fast) ease !important;
@@ -245,6 +289,7 @@ html.ie-active .ie-bubble,
 html.ie-active .ie-overlay,
 html.ie-active [role="menu"],
 html.ie-active [role="dialog"],
+html.ie-active [role="main"] div[style*="border-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
 html.ie-active button,
 html.ie-active input,
 html.ie-active textarea,

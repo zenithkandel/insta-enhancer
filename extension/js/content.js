@@ -149,9 +149,12 @@ function enforceUI() {
     tagNavigationShell();
     tagChatList();
     tagComposer(main);
+    flattenComposerCorners(main);
     tagOverlaySurfaces();
+    tagStyledBubbles(main);
     tagMessageBubbles(main);
     applySurfaceFallbacks();
+    applyHardEdgePass(main);
 }
 
 function tagNavigationShell() {
@@ -268,6 +271,45 @@ function tagOverlaySurfaces() {
     });
 }
 
+function flattenComposerCorners(main) {
+    const textBox =
+        main.querySelector('div[role="textbox"][contenteditable="true"]') ||
+        main.querySelector('div[role="textbox"]');
+
+    if (!textBox) {
+        return;
+    }
+
+    let cursor = textBox;
+    for (let depth = 0; depth < 8 && cursor && cursor !== main; depth += 1) {
+        cursor.style.setProperty('border-radius', '0px', 'important');
+        cursor = cursor.parentElement;
+    }
+}
+
+function tagStyledBubbles(main) {
+    const styledBubbleNodes = main.querySelectorAll(
+        'div[style*="chat-outgoing-message-bubble"], div[style*="chat-incoming-message-bubble"], div[style*="--ig-outgoing-message-bubble"], div[style*="--ig-incoming-message-bubble"]'
+    );
+
+    styledBubbleNodes.forEach((bubble) => {
+        const styleText = (bubble.getAttribute('style') || '').toLowerCase();
+        const isOutgoing = /outgoing/.test(styleText);
+        const isIncoming = /incoming/.test(styleText);
+        const hasMessageContent = bubble.querySelector('div[dir="auto"], span, img, video, canvas, a[href]');
+
+        if (!hasMessageContent) {
+            return;
+        }
+
+        if (!isOutgoing && !isIncoming) {
+            return;
+        }
+
+        decorateBubbleElement(bubble, isOutgoing, Boolean(bubble.querySelector('img, video, canvas')));
+    });
+}
+
 function tagMessageBubbles(main) {
     const rows = Array.from(main.querySelectorAll('div[role="row"]'));
     rows.forEach((row) => {
@@ -289,29 +331,31 @@ function tagMessageBubbles(main) {
             if (!bubble) {
                 return;
             }
-
-            if (!processedBubbles.has(bubble)) {
-                bubble.classList.add('ie-bubble', 'ie-bubble-enter');
-                processedBubbles.add(bubble);
-                setTimeout(() => {
-                    bubble.classList.remove('ie-bubble-enter');
-                }, 360);
-            }
-
-            bubble.classList.remove('ie-bubble--in', 'ie-bubble--out', 'ie-bubble--media');
-            const isMediaBubble = Boolean(bubble.querySelector('img, video, canvas'));
-            if (isMediaBubble) {
-                bubble.classList.add('ie-bubble--media');
-            }
-
             const outgoing = isOutgoingRow(row, bubble);
-            bubble.classList.add(outgoing ? 'ie-bubble--out' : 'ie-bubble--in');
-
-            if (!isMediaBubble) {
-                applyBubbleInlineColors(bubble, outgoing);
-            }
+            const isMediaBubble = Boolean(bubble.querySelector('img, video, canvas'));
+            decorateBubbleElement(bubble, outgoing, isMediaBubble);
         });
     });
+}
+
+function decorateBubbleElement(bubble, outgoing, isMediaBubble) {
+    if (!processedBubbles.has(bubble)) {
+        bubble.classList.add('ie-bubble', 'ie-bubble-enter');
+        processedBubbles.add(bubble);
+        setTimeout(() => {
+            bubble.classList.remove('ie-bubble-enter');
+        }, 360);
+    }
+
+    bubble.classList.remove('ie-bubble--in', 'ie-bubble--out', 'ie-bubble--media');
+    bubble.classList.add(outgoing ? 'ie-bubble--out' : 'ie-bubble--in');
+
+    if (isMediaBubble) {
+        bubble.classList.add('ie-bubble--media');
+        return;
+    }
+
+    applyBubbleInlineColors(bubble, outgoing);
 }
 
 function findBubbleElement(row, textNode) {
@@ -394,10 +438,53 @@ function applyBubbleInlineColors(bubble, outgoing) {
         'border-radius': '0px'
     });
 
-    bubble.querySelectorAll('div[dir="auto"], span, a').forEach((node) => {
+    bubble.querySelectorAll('div[dir="auto"], span, p, li, strong, em, code, a').forEach((node) => {
         const tagName = node.tagName ? node.tagName.toLowerCase() : '';
         const scopedColor = !outgoing && tagName === 'a' ? incomingLink : (outgoing ? outgoingText : incomingText);
         node.style.setProperty('color', scopedColor, 'important');
+    });
+}
+
+function applyHardEdgePass(main) {
+    const candidates = main.querySelectorAll('div[style*="border-radius"], span[style*="border-radius"], [role="menu"] div[style*="border-radius"], [role="dialog"] div[style*="border-radius"]');
+    let applied = 0;
+
+    candidates.forEach((node) => {
+        if (applied > 320) {
+            return;
+        }
+
+        const styleText = (node.getAttribute('style') || '').toLowerCase();
+        if (!styleText) {
+            return;
+        }
+
+        if (/50%|999|100%/.test(styleText)) {
+            return;
+        }
+
+        if (node.closest('svg, path, circle, ellipse, button')) {
+            return;
+        }
+
+        const rect = node.getBoundingClientRect();
+        if (!rect.width || !rect.height) {
+            return;
+        }
+
+        if (rect.width < 24 || rect.height < 14) {
+            return;
+        }
+
+        const containsMessageText = Boolean(node.querySelector('div[dir="auto"], p, span, a[href]'));
+        const likelyPillControl = /padding|background/.test(styleText);
+
+        if (!containsMessageText && !likelyPillControl) {
+            return;
+        }
+
+        node.style.setProperty('border-radius', '0px', 'important');
+        applied += 1;
     });
 }
 
