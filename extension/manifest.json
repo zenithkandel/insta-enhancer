@@ -1,17 +1,20 @@
 {
   "manifest_version": 3,
   "name": "Insta Enhancer",
-  "version": "1.0",
+  "version": "1.1.0",
   "description": "Completely redesign the Instagram Direct Messaging UI to a modern vibe.",
   "permissions": ["storage"],
-  "host_permissions": ["*://*.instagram.com/*"],
+  "host_permissions": ["https://www.instagram.com/*"],
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "Insta Enhancer Settings"
   },
   "content_scripts": [
     {
-      "matches": ["*://*.instagram.com/direct/*"],
+      "matches": [
+        "https://www.instagram.com/direct/t/*",
+        "https://www.instagram.com/direct/inbox/*"
+      ],
       "css": ["css/styles.css"],
       "js": ["js/content.js"],
       "run_at": "document_end"

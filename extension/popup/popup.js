@@ -2,9 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeSelect = document.getElementById('themeSelect');
     const saveBtn = document.getElementById('saveBtn');
 
-    // Load saved theme
     chrome.storage.local.get(['theme'], (result) => {
-        if (result.theme) {
+        if (result && result.theme) {
             themeSelect.value = result.theme;
         }
     });
@@ -12,14 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
     saveBtn.addEventListener('click', () => {
         const selectedTheme = themeSelect.value;
         chrome.storage.local.set({ theme: selectedTheme }, () => {
-            // Send message to active tab to update theme dynamically
             chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                if (tabs[0].url.includes('instagram.com/direct')) {
-                    chrome.tabs.sendMessage(tabs[0].id, { action: 'changeTheme', theme: selectedTheme });
+                const activeTab = tabs && tabs.length > 0 ? tabs[0] : null;
+                if (!activeTab || !activeTab.id) {
+                    return;
                 }
+
+                const currentUrl = activeTab.url || '';
+                if (!currentUrl.includes('instagram.com/direct/')) {
+                    return;
+                }
+
+                chrome.tabs.sendMessage(
+                    activeTab.id,
+                    { action: 'changeTheme', theme: selectedTheme },
+                    () => {
+                        // Ignore delivery errors (e.g., page still loading content script).
+                        void chrome.runtime.lastError;
+                    }
+                );
             });
-            saveBtn.innerText = "Saved!";
-            setTimeout(() => { saveBtn.innerText = "Apply Changes"; }, 2000);
+
+            saveBtn.textContent = 'Saved!';
+            setTimeout(() => {
+                saveBtn.textContent = 'Apply Changes';
+            }, 1200);
         });
     });
 });

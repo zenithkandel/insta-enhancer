@@ -1,251 +1,342 @@
-/* 
+/*
 ===========================================
-  INSTAGRAM DIRECT ENHANCER - MODERN CSS
+  INSTAGRAM DIRECT ENHANCER - STYLES V2
 ===========================================
 */
 
-/* 1. THEME DEFINITIONS (Variables) */
 :root {
-  /* Default IG Overrides so everything works gracefully */
-  --chat-bubble-border-radius: var(--bubble-br) !important;
-  --ig-primary-background: var(--bg-primary) !important;
-  --ig-secondary-background: var(--bg-secondary) !important;
-  --ig-primary-text: var(--text-main) !important;
-  --ig-secondary-text: var(--text-muted) !important;
-  --ig-tertiary-text: var(--text-muted) !important;
-  --web-always-white: var(--bg-primary) !important;
-  --web-always-black: var(--text-main) !important;
-  --ig-elevated-background: var(--bg-secondary) !important;
-  --ig-banner-background: var(--bg-sidebar) !important;
-  --chat-incoming-message-bubble-background-color: var(--bg-secondary) !important;
-  --chat-outgoing-message-bubble-background-color: var(--brand-bold) !important;
+    --ie-font-ui: "Avenir Next", "Segoe UI Variable", "SF Pro Text", "Helvetica Neue", sans-serif;
+    --ie-font-display: "Iowan Old Style", "Book Antiqua", Palatino, serif;
 }
 
-/* Base (Minimal Beige Theme) */
-html.enhancer-active {
-  --bg-primary: #f2efe9;    
-  --bg-secondary: #e6e2da;
-  --bg-sidebar: #eae6df;
-  --text-main: #1a1a1a;
-  --text-muted: #5e5e5e;
-  --accent-color: #a45a3f;  
-  --brand-bold: #1a1a1a;
-  --border-color: #1a1a1a;
-  --font-serif: "Playfair Display", "Times New Roman", serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-  --br-box: 0px; 
-  --bubble-br: 0px;
-  --shadow-box: 4px 4px 0px 0px #1a1a1a;
-  --bubble-shadow: 2px 2px 0px 0px #1a1a1a;
+html.ie-active {
+    --ie-bg: #f1eee8;
+    --ie-surface: #ece6dd;
+    --ie-panel: #e9e2d8;
+    --ie-border: #1e1d1b;
+    --ie-text: #171717;
+    --ie-muted: #5e5b57;
+    --ie-accent: #aa5d42;
+    --ie-bubble-in: #e6dfd5;
+    --ie-bubble-out: #1d1c1a;
+    --ie-bubble-out-text: #f7f4ef;
+    --ie-radius-main: 14px;
+    --ie-radius-soft: 12px;
+    --ie-radius-bubble: 16px;
+    --ie-shadow-soft: 0 8px 24px rgba(35, 29, 21, 0.14);
+    --ie-shadow-hard: 3px 3px 0 rgba(22, 22, 22, 0.85);
+
+    /* Instagram native variables are consumed through rgb(var(...)) in many places.
+     Keep these as RGB triplets to avoid contrast breakage and invalid computed colors. */
+    --ig-primary-background: 241, 238, 232;
+    --ig-secondary-background: 233, 226, 214;
+    --ig-primary-text: 23, 23, 23;
+    --ig-secondary-text: 94, 91, 87;
+    --ig-tertiary-text: 127, 123, 119;
+    --web-always-white: 241, 238, 232;
+    --web-always-black: 23, 23, 23;
+    --chat-incoming-message-bubble-background-color: #e5ddd0;
+    --chat-outgoing-message-bubble-background-color: #1d1c1a;
+    --chat-bubble-border-radius: 16px;
 }
 
-/* Cyberpunk Theme Mode */
-html.enhancer-theme-cyberpunk {
-  --bg-primary: #09090b;
-  --bg-secondary: #13131a;
-  --bg-sidebar: #050508;
-  --text-main: #00ffcc;
-  --text-muted: #008f73;
-  --accent-color: #ff0077;
-  --brand-bold: #ff0077;
-  --border-color: #00ffcc;
-  --br-box: 0px;
-  --bubble-br: 0px;
-  --shadow-box: -4px 4px 0px 0px var(--accent-color);
-  --bubble-shadow: -2px 2px 0px 0px var(--accent-color);
-  --font-sans: "Courier New", Courier, monospace;
+html.ie-active[data-ie-theme="minimal-beige"] {
+    --ie-bg: #f1eee8;
+    --ie-surface: #ece6dd;
+    --ie-panel: #e9e2d8;
+    --ie-border: #1e1d1b;
+    --ie-text: #171717;
+    --ie-muted: #5e5b57;
+    --ie-accent: #aa5d42;
+    --ie-bubble-in: #e6dfd5;
+    --ie-bubble-out: #1d1c1a;
+    --ie-bubble-out-text: #f7f4ef;
+    --ie-shadow-soft: 0 8px 24px rgba(35, 29, 21, 0.14);
+    --ie-shadow-hard: 3px 3px 0 rgba(22, 22, 22, 0.85);
+
+    --ig-primary-background: 241, 238, 232;
+    --ig-secondary-background: 233, 226, 214;
+    --ig-primary-text: 23, 23, 23;
+    --ig-secondary-text: 94, 91, 87;
+    --ig-tertiary-text: 127, 123, 119;
+    --web-always-white: 241, 238, 232;
+    --web-always-black: 23, 23, 23;
+    --chat-incoming-message-bubble-background-color: #e5ddd0;
+    --chat-outgoing-message-bubble-background-color: #1d1c1a;
 }
 
-/* Dark Glass Mode */
-html.enhancer-theme-dark-glass {
-  --bg-primary: #0f1115;
-  --bg-secondary: rgba(255, 255, 255, 0.05);
-  --bg-sidebar: rgba(255, 255, 255, 0.03);
-  --text-main: #ffffff;
-  --text-muted: #aaaaaa;
-  --accent-color: #60a5fa;
-  --brand-bold: #2563eb;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --br-box: 16px;
-  --bubble-br: 16px;
-  --shadow-box: 0 4px 24px rgba(0,0,0,0.4);
-  --bubble-shadow: 0 4px 12px rgba(0,0,0,0.2);
+html.ie-active[data-ie-theme="dark-glass"] {
+    --ie-bg: #11131a;
+    --ie-surface: rgba(28, 33, 45, 0.84);
+    --ie-panel: rgba(18, 22, 32, 0.95);
+    --ie-border: rgba(124, 142, 179, 0.35);
+    --ie-text: #f5f7fb;
+    --ie-muted: #a3acc1;
+    --ie-accent: #7bc2ff;
+    --ie-bubble-in: rgba(53, 62, 81, 0.82);
+    --ie-bubble-out: linear-gradient(135deg, #3678f8 0%, #2d5dd8 100%);
+    --ie-bubble-out-text: #f8fbff;
+    --ie-radius-main: 18px;
+    --ie-radius-soft: 14px;
+    --ie-radius-bubble: 20px;
+    --ie-shadow-soft: 0 16px 34px rgba(0, 0, 0, 0.36);
+    --ie-shadow-hard: 0 6px 18px rgba(19, 40, 82, 0.35);
+
+    --ig-primary-background: 17, 19, 26;
+    --ig-secondary-background: 36, 41, 55;
+    --ig-primary-text: 244, 247, 251;
+    --ig-secondary-text: 163, 173, 193;
+    --ig-tertiary-text: 128, 138, 156;
+    --web-always-white: 17, 19, 26;
+    --web-always-black: 244, 247, 251;
+    --chat-incoming-message-bubble-background-color: #344059;
+    --chat-outgoing-message-bubble-background-color: #2f6ef0;
 }
 
-/* 2. GLOBAL OVERRIDES */
-html.enhancer-active,
-html.enhancer-active body,
-html.enhancer-active [role="main"] {
-  background-color: var(--bg-primary) !important;
-  color: var(--text-main) !important;
-  font-family: var(--font-sans) !important;
+html.ie-active[data-ie-theme="cyberpunk"] {
+    --ie-bg: #0a0d16;
+    --ie-surface: #111726;
+    --ie-panel: #0a0f1b;
+    --ie-border: #30ffd8;
+    --ie-text: #b9ffe8;
+    --ie-muted: #66ccb3;
+    --ie-accent: #ff4fd8;
+    --ie-bubble-in: #102031;
+    --ie-bubble-out: linear-gradient(135deg, #f6009b 0%, #a400ff 100%);
+    --ie-bubble-out-text: #f7f8ff;
+    --ie-radius-main: 12px;
+    --ie-radius-soft: 10px;
+    --ie-radius-bubble: 12px;
+    --ie-shadow-soft: 0 0 0 1px rgba(48, 255, 216, 0.22), 0 0 24px rgba(48, 255, 216, 0.2);
+    --ie-shadow-hard: 2px 2px 0 rgba(255, 79, 216, 0.9);
+
+    --ig-primary-background: 10, 13, 22;
+    --ig-secondary-background: 19, 28, 43;
+    --ig-primary-text: 185, 255, 232;
+    --ig-secondary-text: 103, 208, 182;
+    --ig-tertiary-text: 74, 162, 143;
+    --web-always-white: 10, 13, 22;
+    --web-always-black: 185, 255, 232;
+    --chat-incoming-message-bubble-background-color: #0f2237;
+    --chat-outgoing-message-bubble-background-color: #bc00ff;
 }
 
-/* Fix SVG colors */
-html.enhancer-active svg {
-  color: var(--text-main) !important;
-  fill: currentColor !important;
-  transition: all 0.2s ease;
-}
-html.enhancer-active svg circle, 
-html.enhancer-active svg path, 
-html.enhancer-active svg polygon, 
-html.enhancer-active svg rect, 
-html.enhancer-active svg line {
-  stroke: inherit;
-}
-html.enhancer-active button:hover svg {
-  color: var(--accent-color) !important;
-  transform: scale(1.1);
+html.ie-active,
+html.ie-active body {
+    background-color: var(--ie-bg) !important;
+    color: var(--ie-text) !important;
+    font-family: var(--ie-font-ui) !important;
 }
 
-/* 3. SIDEBAR & MENUS (Opaque & Fixed) */
-html.enhancer-active .enhanced-left-sidebar,
-html.enhancer-active nav[role="navigation"],
-html.enhancer-active div[style*="width: 398px"] {
-  background-color: var(--bg-sidebar) !important;
-  border-right: 1px solid var(--border-color) !important;
-  z-index: 100 !important; /* Keep it above everything */
+html.ie-active body {
+    background-image:
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.06), transparent 42%),
+        radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.04), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(0, 0, 0, 0.01));
+    background-attachment: fixed;
 }
 
-/* Menus, Dialogs (More Options) */
-html.enhancer-active div[role="menu"],
-html.enhancer-active div[role="dialog"] {
-  background-color: var(--bg-primary) !important;
-  border: 2px solid var(--border-color) !important;
-  box-shadow: var(--shadow-box) !important;
-  border-radius: var(--br-box) !important;
-  color: var(--text-main) !important;
+html.ie-active [role="main"],
+html.ie-active .ie-thread-main {
+    background: transparent !important;
 }
 
-/* Conversation List Items */
-html.enhancer-active .enhanced-chats-list a,
-html.enhancer-active .enhanced-chats-list > div > div > a {
-  background-color: transparent !important;
-  border: 1px solid transparent !important;
-  border-radius: var(--br-box) !important;
-  margin: 4px 8px !important;
-  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-}
-html.enhancer-active .enhanced-chats-list a:hover {
-  background-color: var(--bg-secondary) !important;
-  border: 1px solid var(--border-color) !important;
-  box-shadow: var(--bubble-shadow) !important;
-  transform: translateX(4px);
+html.ie-active .ie-thread-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    background-color: var(--ie-surface) !important;
+    border-bottom: 1px solid var(--ie-border) !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
+    backdrop-filter: blur(10px);
 }
 
-/* 4. CHAT BUBBLES WITH ANIMATIONS */
-@keyframes messagePop {
-  0% { transform: scale(0.9) translateY(10px); opacity: 0; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
+/* Keep side nav and hover-expansion panel opaque */
+html.ie-active .ie-nav-shell,
+html.ie-active nav[role="navigation"] {
+    background-color: var(--ie-panel) !important;
+    border-right: 1px solid var(--ie-border) !important;
 }
 
-html.enhancer-active .enhanced-bubble {
-  border-radius: var(--bubble-br) !important;
-  border: 1px solid var(--border-color) !important;
-  box-shadow: var(--bubble-shadow) !important;
-  padding: 10px 14px !important;
-  font-weight: 500 !important;
-  animation: messagePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  transition: transform 0.2s ease-out, box-shadow 0.2s;
-  pointer-events: auto; /* Ensure hover works */
+html.ie-active .ie-nav-shell {
+    box-shadow: var(--ie-shadow-soft) !important;
 }
 
-html.enhancer-active .enhanced-bubble:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-box) !important; /* Elevate on hover */
+/* Menus, popovers and dialogs must remain opaque */
+html.ie-active [role="menu"],
+html.ie-active [role="dialog"] {
+    background-color: var(--ie-surface) !important;
+    border: 1px solid var(--ie-border) !important;
+    border-radius: var(--ie-radius-soft) !important;
+    box-shadow: var(--ie-shadow-soft) !important;
+    color: var(--ie-text) !important;
+    opacity: 1 !important;
+    backdrop-filter: none !important;
 }
 
-/* Incoming vs Outgoing Bubbles */
-html.enhancer-active .enhanced-bubble-incoming {
-  background-color: var(--bg-secondary) !important;
-  color: var(--text-main) !important;
-  transform-origin: left center;
-}
-html.enhancer-active .enhanced-bubble-incoming * {
-  color: var(--text-main) !important;
+html.ie-active [role="menu"] *,
+html.ie-active [role="dialog"] * {
+    color: var(--ie-text) !important;
 }
 
-html.enhancer-active .enhanced-bubble-outgoing {
-  background-color: var(--brand-bold) !important;
-  color: var(--bg-primary) !important;
-  transform-origin: right center;
-}
-html.enhancer-active .enhanced-bubble-outgoing * {
-  color: var(--bg-primary) !important;
+html.ie-active .ie-chat-list {
+    background: transparent !important;
 }
 
-/* Media Bubbles (Images/Videos) should not have the hard background */
-html.enhancer-active .enhanced-bubble img,
-html.enhancer-active .enhanced-bubble video {
-  border-radius: var(--bubble-br) !important;
-  border: 1px solid var(--border-color) !important;
+html.ie-active .ie-chat-row,
+html.ie-active .ie-chat-item {
+    border: 1px solid transparent !important;
+    border-radius: var(--ie-radius-soft) !important;
+    transition: transform 0.18s ease, box-shadow 0.22s ease, background-color 0.22s ease !important;
 }
 
-/* 5. TEXT INPUT AREA */
-html.enhancer-active .enhanced-input-container {
-  background-color: var(--bg-secondary) !important;
-  border: 2px solid var(--border-color) !important;
-  border-radius: var(--br-box) !important;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-  margin-bottom: 20px !important; /* Space from bottom */
-}
-html.enhancer-active .enhanced-input-container:focus-within {
-  box-shadow: var(--shadow-box) !important;
-  transform: translateY(-2px);
-  border-color: var(--accent-color) !important;
+html.ie-active .ie-chat-item:hover,
+html.ie-active .ie-chat-row:hover {
+    background-color: var(--ie-surface) !important;
+    border-color: var(--ie-border) !important;
+    box-shadow: var(--ie-shadow-hard) !important;
+    transform: translateX(3px);
 }
 
-html.enhancer-active [contenteditable="true"] {
-  color: var(--text-main) !important;
-}
-html.enhancer-active [contenteditable="true"][data-lexical-text="true"]:empty::before {
-  color: var(--text-muted) !important;
-}
-
-/* 6. TYPING INDICATOR FUN */
-@keyframes bounceTyping {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-html.enhancer-active [aria-label*="typing"] circle {
-  animation: bounceTyping 1s infinite;
-  fill: var(--accent-color) !important;
+html.ie-active .ie-composer-shell {
+    background: var(--ie-surface) !important;
+    border: 1px solid var(--ie-border) !important;
+    border-radius: 999px !important;
+    box-shadow: var(--ie-shadow-soft) !important;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease !important;
 }
 
-/* 7. CUSTOM SCROLLBARS */
-html.enhancer-active ::-webkit-scrollbar {
-  width: 10px !important;
-  height: 10px !important;
-}
-html.enhancer-active ::-webkit-scrollbar-track {
-  background: var(--bg-primary) !important;
-  border-left: 1px solid var(--border-color);
-}
-html.enhancer-active ::-webkit-scrollbar-thumb {
-  background: var(--text-muted) !important;
-  border: 1px solid var(--border-color);
-  border-radius: var(--br-box) !important;
-}
-html.enhancer-active ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-color) !important;
+html.ie-active .ie-composer-shell:focus-within {
+    border-color: var(--ie-accent) !important;
+    box-shadow: 0 0 0 3px rgba(122, 138, 168, 0.15), var(--ie-shadow-soft) !important;
+    transform: translateY(-1px);
 }
 
-/* MORE FUN THINGS: Message Sent Notification */
-@keyframes sentCheck {
-  0% { transform: scale(0); opacity:0; }
-  50% { transform: scale(1.3); }
-  100% { transform: scale(1); opacity:1; }
-}
-/* This targets the tiny "Sent" icon that usually appears below messages */
-html.enhancer-active div[role="row"] > div > div > svg,
-html.enhancer-active span[aria-label="Seen"] {
-  animation: sentCheck 0.4s ease-out;
-  color: var(--accent-color) !important;
+html.ie-active .ie-composer-input,
+html.ie-active .ie-composer-input * {
+    color: var(--ie-text) !important;
 }
 
-/* Fun hover on header */
-html.enhancer-active header > div > a:hover > div > img {
-   transform: rotate(5deg) scale(1.1);
-   transition: all 0.3s ease;
+html.ie-active .ie-bubble {
+    border-radius: var(--ie-radius-bubble) !important;
+    border: 1px solid var(--ie-border) !important;
+    box-shadow: var(--ie-shadow-soft) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+}
+
+html.ie-active .ie-bubble:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ie-shadow-hard) !important;
+}
+
+html.ie-active .ie-bubble--in {
+    background: var(--ie-bubble-in) !important;
+    color: var(--ie-text) !important;
+}
+
+html.ie-active .ie-bubble--in * {
+    color: var(--ie-text) !important;
+}
+
+html.ie-active .ie-bubble--out {
+    background: var(--ie-bubble-out) !important;
+    color: var(--ie-bubble-out-text) !important;
+}
+
+html.ie-active .ie-bubble--out * {
+    color: var(--ie-bubble-out-text) !important;
+}
+
+html.ie-active .ie-bubble--media {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+html.ie-active .ie-bubble--media img,
+html.ie-active .ie-bubble--media video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: inherit !important;
+}
+
+html.ie-active svg {
+    color: var(--ie-text) !important;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+html.ie-active button:hover svg,
+html.ie-active [role="button"]:hover svg,
+html.ie-active a:hover svg {
+    color: var(--ie-accent) !important;
+    transform: scale(1.08);
+}
+
+html.ie-active time,
+html.ie-active [aria-label*="Seen" i],
+html.ie-active [aria-label*="Typing" i] {
+    color: var(--ie-muted) !important;
+}
+
+@keyframes ieBubbleInLeft {
+    from {
+        transform: translateX(-8px) translateY(6px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes ieBubbleInRight {
+    from {
+        transform: translateX(8px) translateY(6px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+}
+
+html.ie-active .ie-bubble.ie-bubble-enter.ie-bubble--in {
+    animation: ieBubbleInLeft 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+html.ie-active .ie-bubble.ie-bubble-enter.ie-bubble--out {
+    animation: ieBubbleInRight 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+html.ie-active ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+html.ie-active ::-webkit-scrollbar-track {
+    background-color: var(--ie-panel);
+}
+
+html.ie-active ::-webkit-scrollbar-thumb {
+    background-color: var(--ie-muted);
+    border: 2px solid var(--ie-panel);
+    border-radius: 999px;
+}
+
+html.ie-active ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--ie-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    html.ie-active *,
+    html.ie-active *::before,
+    html.ie-active *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
