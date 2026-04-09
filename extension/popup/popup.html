@@ -1,63 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Insta Enhancer Settings</title>
-  <style>
-    body {
-      width: 250px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      padding: 16px;
-      background-color: #f2efe9; /* Beige theme from reference */
-      color: #1a1a1a;
-      border: 1px solid #1a1a1a;
-    }
-    h2 {
-      margin-top: 0;
-      font-size: 16px;
-      border-bottom: 2px solid #1a1a1a;
-      padding-bottom: 8px;
-    }
-    .setting-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    select {
-      padding: 4px;
-      border: 1px solid #1a1a1a;
-      background: #fff;
-      border-radius: 4px;
-    }
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 8px;
-      background-color: #a45a3f; /* Orange accent */
-      color: white;
-      border: 2px solid #1a1a1a;
-      cursor: pointer;
-      font-weight: bold;
-      text-align: center;
-    }
-    .btn:hover {
-      background-color: #8a4831;
-    }
-  </style>
-</head>
-<body>
-  <h2>Enhancer Settings</h2>
-  <div class="setting-row">
-    <label for="themeSelect">Theme</label>
-    <select id="themeSelect">
-      <option value="minimal-beige">Minimal Beige</option>
-      <option value="dark-glass">Dark Glass</option>
-      <option value="cyberpunk">Cyberpunk</option>
-      <option value="default">Default</option>
-    </select>
-  </div>
-  <button id="saveBtn" class="btn">Apply Changes</button>
-  <script src="popup.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insta Enhancer Settings</title>
+    <style>
+      body {
+        width: 250px;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        padding: 16px;
+        background-color: #f2efe9; /* Beige theme from reference */
+        color: #1a1a1a;
+        border: 1px solid #1a1a1a;
+      }
+      h2 {
+        margin-top: 0;
+        font-size: 16px;
+        border-bottom: 2px solid #1a1a1a;
+        padding-bottom: 8px;
+      }
+      .setting-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      select {
+        padding: 4px;
+        border: 1px solid #1a1a1a;
+        background: #fff;
+        border-radius: 4px;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        background-color: #a45a3f; /* Orange accent */
+        color: white;
+        border: 2px solid #1a1a1a;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+      }
+      .btn:hover {
+        background-color: #8a4831;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Enhancer Settings</h2>
+    <div class="setting-row">
+      <label for="themeSelect">Theme</label>
+      <select id="themeSelect">
+        <option value="minimal-beige">Minimal Beige</option>
+        <option value="dark-glass">Dark Glass</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="default">Default</option>
+      </select>
+    </div>
+    <button id="saveBtn" class="btn">Apply Changes</button>
+    <script src="popup.js"></script>
+  </body>
 </html>
