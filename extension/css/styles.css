@@ -1,24 +1,13 @@
-/* Base modern reset and theme variables */
-:root {
-  --bg-primary: #f2efe9;    /* Beige from reference image */
-  --bg-secondary: #e6e2da;
-  --bg-sidebar: #eae6df;
-  --text-main: #1a1a1a;
-  --text-muted: #5e5e5e;
-  --accent-color: #a45a3f;  /* Burnt orange */
-  --brand-bold: #1a1a1a;
-  --border-color: #1a1a1a;
-  
-  --font-serif: "Playfair Display", "Times New Roman", serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-  
-  --br-box: 0px; 
-  --shadow-box: 2px 2px 0px 0px #1a1a1a;
+/* 
+===========================================
+  INSTAGRAM DIRECT ENHANCER - MODERN CSS
+===========================================
+*/
 
-  /* Overriding native Instagram variables to ensure smooth transitions natively too */
-  --chat-incoming-message-bubble-background-color: var(--bg-secondary) !important;
-  --chat-outgoing-message-bubble-background-color: var(--brand-bold) !important;
-  --chat-bubble-border-radius: var(--br-box) !important;
+/* 1. THEME DEFINITIONS (Variables) */
+:root {
+  /* Default IG Overrides so everything works gracefully */
+  --chat-bubble-border-radius: var(--bubble-br) !important;
   --ig-primary-background: var(--bg-primary) !important;
   --ig-secondary-background: var(--bg-secondary) !important;
   --ig-primary-text: var(--text-main) !important;
@@ -28,44 +17,62 @@
   --web-always-black: var(--text-main) !important;
   --ig-elevated-background: var(--bg-secondary) !important;
   --ig-banner-background: var(--bg-sidebar) !important;
+  --chat-incoming-message-bubble-background-color: var(--bg-secondary) !important;
+  --chat-outgoing-message-bubble-background-color: var(--brand-bold) !important;
 }
-  
-/* Light / Default overrides */
-html.enhancer-theme-minimal-beige {
-  /* Inherits defaults */
+
+/* Base (Minimal Beige Theme) */
+html.enhancer-active {
+  --bg-primary: #f2efe9;    
+  --bg-secondary: #e6e2da;
+  --bg-sidebar: #eae6df;
+  --text-main: #1a1a1a;
+  --text-muted: #5e5e5e;
+  --accent-color: #a45a3f;  
+  --brand-bold: #1a1a1a;
+  --border-color: #1a1a1a;
+  --font-serif: "Playfair Display", "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  --br-box: 0px; 
+  --bubble-br: 0px;
+  --shadow-box: 4px 4px 0px 0px #1a1a1a;
+  --bubble-shadow: 2px 2px 0px 0px #1a1a1a;
 }
-  
+
 /* Cyberpunk Theme Mode */
 html.enhancer-theme-cyberpunk {
-  --bg-primary: #05051a;
-  --bg-secondary: #0b0b2b;
-  --bg-sidebar: #010113;
+  --bg-primary: #09090b;
+  --bg-secondary: #13131a;
+  --bg-sidebar: #050508;
   --text-main: #00ffcc;
-  --text-muted: #66b2a0;
-  --accent-color: #ff0055;
-  --brand-bold: #ff00cc;
-  --border-color: #ff0055;
+  --text-muted: #008f73;
+  --accent-color: #ff0077;
+  --brand-bold: #ff0077;
+  --border-color: #00ffcc;
   --br-box: 0px;
-  --shadow-box: 2px 2px 0px 0px var(--accent-color);
+  --bubble-br: 0px;
+  --shadow-box: -4px 4px 0px 0px var(--accent-color);
+  --bubble-shadow: -2px 2px 0px 0px var(--accent-color);
   --font-sans: "Courier New", Courier, monospace;
 }
-  
+
 /* Dark Glass Mode */
 html.enhancer-theme-dark-glass {
-  --bg-primary: #121415;
-  --bg-secondary: #1a1d1e;
-  --bg-sidebar: #0d0f10;
-  --text-main: #f0f0f0;
+  --bg-primary: #0f1115;
+  --bg-secondary: rgba(255, 255, 255, 0.05);
+  --bg-sidebar: rgba(255, 255, 255, 0.03);
+  --text-main: #ffffff;
   --text-muted: #aaaaaa;
-  --accent-color: #5ab1ff;
-  --brand-bold: #262a2d;
-  --border-color: #2b3033;
+  --accent-color: #60a5fa;
+  --brand-bold: #2563eb;
+  --border-color: rgba(255, 255, 255, 0.1);
   --br-box: 16px;
-  --shadow-box: 0 4px 16px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  --bubble-br: 16px;
+  --shadow-box: 0 4px 24px rgba(0,0,0,0.4);
+  --bubble-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-  
-/* Apply theme styles globally */
+
+/* 2. GLOBAL OVERRIDES */
 html.enhancer-active,
 html.enhancer-active body,
 html.enhancer-active [role="main"] {
@@ -74,117 +81,152 @@ html.enhancer-active [role="main"] {
   font-family: var(--font-sans) !important;
 }
 
-/* Sidebar overriding */
-html.enhancer-active .enhanced-left-sidebar {
-  background-color: var(--bg-sidebar) !important;
-  border-right: 1px solid var(--border-color) !important;
+/* Fix SVG colors */
+html.enhancer-active svg {
+  color: var(--text-main) !important;
+  fill: currentColor !important;
+  transition: all 0.2s ease;
+}
+html.enhancer-active svg circle, 
+html.enhancer-active svg path, 
+html.enhancer-active svg polygon, 
+html.enhancer-active svg rect, 
+html.enhancer-active svg line {
+  stroke: inherit;
+}
+html.enhancer-active button:hover svg {
+  color: var(--accent-color) !important;
+  transform: scale(1.1);
 }
 
-html.enhancer-active .enhanced-left-sidebar * {
-  border-color: var(--border-color) !important;
+/* 3. SIDEBAR & MENUS (Opaque & Fixed) */
+html.enhancer-active .enhanced-left-sidebar,
+html.enhancer-active nav[role="navigation"],
+html.enhancer-active div[style*="width: 398px"] {
+  background-color: var(--bg-sidebar) !important;
+  border-right: 1px solid var(--border-color) !important;
+  z-index: 100 !important; /* Keep it above everything */
+}
+
+/* Menus, Dialogs (More Options) */
+html.enhancer-active div[role="menu"],
+html.enhancer-active div[role="dialog"] {
+  background-color: var(--bg-primary) !important;
+  border: 2px solid var(--border-color) !important;
+  box-shadow: var(--shadow-box) !important;
+  border-radius: var(--br-box) !important;
+  color: var(--text-main) !important;
 }
 
 /* Conversation List Items */
-html.enhancer-active .enhanced-chats-list > div > div > a,
-html.enhancer-active .enhanced-chats-list a {
-  transition: all 0.2s ease !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+html.enhancer-active .enhanced-chats-list a,
+html.enhancer-active .enhanced-chats-list > div > div > a {
   background-color: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--br-box) !important;
+  margin: 4px 8px !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
-
 html.enhancer-active .enhanced-chats-list a:hover {
   background-color: var(--bg-secondary) !important;
   border: 1px solid var(--border-color) !important;
-  box-shadow: var(--shadow-box) !important;
-  z-index: 10 !important;
-  position: relative !important;
+  box-shadow: var(--bubble-shadow) !important;
+  transform: translateX(4px);
 }
 
-/* Chat text & generic texts */
-html.enhancer-active span,
-html.enhancer-active div[dir="auto"],
-html.enhancer-active h1, html.enhancer-active h2, html.enhancer-active h3 {
-  color: inherit !important;
+/* 4. CHAT BUBBLES WITH ANIMATIONS */
+@keyframes messagePop {
+  0% { transform: scale(0.9) translateY(10px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
-/* Message Bubbles */
 html.enhancer-active .enhanced-bubble {
-  border-radius: var(--br-box) !important;
+  border-radius: var(--bubble-br) !important;
   border: 1px solid var(--border-color) !important;
-  box-shadow: var(--shadow-box) !important;
-  padding: 8px 12px !important;
+  box-shadow: var(--bubble-shadow) !important;
+  padding: 10px 14px !important;
   font-weight: 500 !important;
+  animation: messagePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  transition: transform 0.2s ease-out, box-shadow 0.2s;
+  pointer-events: auto; /* Ensure hover works */
+}
+
+html.enhancer-active .enhanced-bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-box) !important; /* Elevate on hover */
+}
+
+/* Incoming vs Outgoing Bubbles */
+html.enhancer-active .enhanced-bubble-incoming {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-main) !important;
+  transform-origin: left center;
+}
+html.enhancer-active .enhanced-bubble-incoming * {
   color: var(--text-main) !important;
 }
 
 html.enhancer-active .enhanced-bubble-outgoing {
   background-color: var(--brand-bold) !important;
   color: var(--bg-primary) !important;
+  transform-origin: right center;
 }
-
-html.enhancer-active .enhanced-bubble-outgoing span,
-html.enhancer-active .enhanced-bubble-outgoing div[dir="auto"] {
+html.enhancer-active .enhanced-bubble-outgoing * {
   color: var(--bg-primary) !important;
 }
 
-html.enhancer-active .enhanced-bubble-incoming {
-  background-color: var(--bg-secondary) !important;
-  color: var(--text-main) !important;
+/* Media Bubbles (Images/Videos) should not have the hard background */
+html.enhancer-active .enhanced-bubble img,
+html.enhancer-active .enhanced-bubble video {
+  border-radius: var(--bubble-br) !important;
+  border: 1px solid var(--border-color) !important;
 }
 
-/* Input Box Area */
+/* 5. TEXT INPUT AREA */
 html.enhancer-active .enhanced-input-container {
   background-color: var(--bg-secondary) !important;
   border: 2px solid var(--border-color) !important;
   border-radius: var(--br-box) !important;
-  color: var(--text-main) !important;
-  transition: box-shadow 0.2s !important;
-  box-shadow: none !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  margin-bottom: 20px !important; /* Space from bottom */
 }
-
 html.enhancer-active .enhanced-input-container:focus-within {
   box-shadow: var(--shadow-box) !important;
+  transform: translateY(-2px);
+  border-color: var(--accent-color) !important;
 }
 
 html.enhancer-active [contenteditable="true"] {
-   color: var(--text-main) !important;
-}
-
-html.enhancer-active [contenteditable="true"]:focus {
-  outline: none !important;
-}
-
-/* Replace unstyled Instagram SVG icons with our accent */
-html.enhancer-active svg {
   color: var(--text-main) !important;
-  fill: var(--text-main) !important;
+}
+html.enhancer-active [contenteditable="true"][data-lexical-text="true"]:empty::before {
+  color: var(--text-muted) !important;
 }
 
-html.enhancer-active button svg:hover,
-html.enhancer-active a svg:hover {
-  color: var(--accent-color) !important;
+/* 6. TYPING INDICATOR FUN */
+@keyframes bounceTyping {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+html.enhancer-active [aria-label*="typing"] circle {
+  animation: bounceTyping 1s infinite;
   fill: var(--accent-color) !important;
 }
 
-/* Fix SVG outline cases where fill and color dont apply as expected */
-html.enhancer-active svg circle, html.enhancer-active svg path, html.enhancer-active svg polygon, html.enhancer-active svg rect, html.enhancer-active svg line {
-  stroke: var(--text-main);
-}
-html.enhancer-active svg[hidden] {
-  display:none !important;
-}
-
-/* Scrollbar restyling */
+/* 7. CUSTOM SCROLLBARS */
 html.enhancer-active ::-webkit-scrollbar {
-  width: 8px !important;
+  width: 10px !important;
+  height: 10px !important;
 }
 html.enhancer-active ::-webkit-scrollbar-track {
-  background: var(--bg-primary) !important; 
+  background: var(--bg-primary) !important;
+  border-left: 1px solid var(--border-color);
 }
 html.enhancer-active ::-webkit-scrollbar-thumb {
-  background: var(--text-muted) !important; 
+  background: var(--text-muted) !important;
+  border: 1px solid var(--border-color);
   border-radius: var(--br-box) !important;
 }
 html.enhancer-active ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-color) !important; 
+  background: var(--accent-color) !important;
 }
