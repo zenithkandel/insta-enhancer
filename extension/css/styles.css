@@ -310,6 +310,7 @@ html.ie-active ::-webkit-scrollbar-thumb:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     html.ie-active *,
     html.ie-active *::before,
     html.ie-active *::after {
