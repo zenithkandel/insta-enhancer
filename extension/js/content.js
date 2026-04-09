@@ -150,9 +150,12 @@ function enforceUI() {
     tagChatList();
     tagComposer(main);
     flattenComposerCorners(main);
+    normalizeComposerSpacing(main);
     tagOverlaySurfaces();
+    styleSearchBar();
     tagStyledBubbles(main);
     tagMessageBubbles(main);
+    forceMessageCornerFlatten(main);
     applySurfaceFallbacks();
     applyHardEdgePass(main);
 }
@@ -287,6 +290,87 @@ function flattenComposerCorners(main) {
     }
 }
 
+function normalizeComposerSpacing(main) {
+    const textBox =
+        main.querySelector('div[role="textbox"][contenteditable="true"]') ||
+        main.querySelector('div[role="textbox"]');
+
+    if (!textBox) {
+        return;
+    }
+
+    const shell = findComposerShell(textBox, main);
+    const area = findComposerArea(shell || textBox, main);
+
+    if (area) {
+        setPaint(area, {
+            padding: '0 0 10px 0'
+        });
+    }
+
+    if (shell) {
+        setPaint(shell, {
+            padding: '0 14px',
+            'min-height': '46px',
+            display: 'flex',
+            'align-items': 'center',
+            gap: '10px',
+            'border-radius': '0px'
+        });
+    }
+
+    setPaint(textBox, {
+        padding: '10px 0',
+        margin: '0',
+        'line-height': '1.35',
+        'min-height': '24px',
+        'border-radius': '0px'
+    });
+}
+
+function styleSearchBar() {
+    const searchInputs = document.querySelectorAll(
+        'nav[role="navigation"] input[placeholder*="Search" i], nav[role="navigation"] input[aria-label*="Search" i], nav[role="navigation"] input[type="search"]'
+    );
+
+    const separator = asColor(RETRO_THEME_VARIABLES['--ig-separator']);
+    const panel = asColor(RETRO_THEME_VARIABLES['--ig-secondary-background']);
+    const textColor = asColor(RETRO_THEME_VARIABLES['--ig-primary-text']);
+
+    searchInputs.forEach((input) => {
+        input.classList.add('ie-search-input');
+
+        let shell = null;
+        let cursor = input;
+        for (let depth = 0; depth < 7 && cursor; depth += 1) {
+            const rect = cursor.getBoundingClientRect();
+            if (rect.width > 160 && rect.width < 520 && rect.height >= 30 && rect.height <= 90) {
+                shell = cursor;
+            }
+
+            cursor = cursor.parentElement;
+            if (cursor && cursor.matches('nav[role="navigation"]')) {
+                break;
+            }
+        }
+
+        if (shell) {
+            shell.classList.add('ie-search-shell');
+            setPaint(shell, {
+                'border-radius': '0px',
+                border: `1px solid ${separator}`,
+                'background-color': panel
+            });
+        }
+
+        setPaint(input, {
+            'border-radius': '0px',
+            'background-color': 'transparent',
+            color: textColor
+        });
+    });
+}
+
 function tagStyledBubbles(main) {
     const styledBubbleNodes = main.querySelectorAll(
         'div[style*="chat-outgoing-message-bubble"], div[style*="chat-incoming-message-bubble"], div[style*="--ig-outgoing-message-bubble"], div[style*="--ig-incoming-message-bubble"]'
@@ -356,6 +440,42 @@ function decorateBubbleElement(bubble, outgoing, isMediaBubble) {
     }
 
     applyBubbleInlineColors(bubble, outgoing);
+}
+
+function forceMessageCornerFlatten(main) {
+    const rows = main.querySelectorAll('div[role="row"]');
+
+    rows.forEach((row) => {
+        if (row.querySelector('div[role="textbox"]')) {
+            return;
+        }
+
+        const textNodes = row.querySelectorAll('div[dir="auto"], span[dir="auto"]');
+        textNodes.forEach((textNode) => {
+            if (textNode.closest('div[role="textbox"]')) {
+                return;
+            }
+
+            let cursor = textNode;
+            for (let depth = 0; depth < 5 && cursor; depth += 1) {
+                if (cursor === row.parentElement) {
+                    break;
+                }
+
+                if (cursor.matches && cursor.matches('svg, path, circle, ellipse, img, video')) {
+                    cursor = cursor.parentElement;
+                    continue;
+                }
+
+                cursor.style.setProperty('border-radius', '0px', 'important');
+                cursor = cursor.parentElement;
+
+                if (cursor === row) {
+                    break;
+                }
+            }
+        });
+    });
 }
 
 function findBubbleElement(row, textNode) {
@@ -446,7 +566,9 @@ function applyBubbleInlineColors(bubble, outgoing) {
 }
 
 function applyHardEdgePass(main) {
-    const candidates = main.querySelectorAll('div[style*="border-radius"], span[style*="border-radius"], [role="menu"] div[style*="border-radius"], [role="dialog"] div[style*="border-radius"]');
+    const candidates = main.querySelectorAll(
+        'div[style*="border-radius"], div[style*="border-top-left-radius"], div[style*="border-top-right-radius"], div[style*="border-bottom-left-radius"], div[style*="border-bottom-right-radius"], div[style*="border-start-start-radius"], div[style*="border-start-end-radius"], div[style*="border-end-start-radius"], div[style*="border-end-end-radius"], span[style*="border-radius"], span[style*="border-top-left-radius"], span[style*="border-top-right-radius"], [role="menu"] div[style*="border-radius"], [role="dialog"] div[style*="border-radius"]'
+    );
     let applied = 0;
 
     candidates.forEach((node) => {

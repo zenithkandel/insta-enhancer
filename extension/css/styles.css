@@ -104,6 +104,26 @@ html.ie-active nav[role="navigation"] {
     opacity: 1 !important;
 }
 
+html.ie-active .ie-search-shell,
+html.ie-active nav[role="navigation"] input[placeholder*="Search" i],
+html.ie-active nav[role="navigation"] input[aria-label*="Search" i],
+html.ie-active nav[role="navigation"] input[type="search"] {
+    border-radius: 0 !important;
+}
+
+html.ie-active .ie-search-shell {
+    background: rgb(var(--ig-secondary-background)) !important;
+    border: 1px solid rgb(var(--ig-separator)) !important;
+}
+
+html.ie-active .ie-search-input,
+html.ie-active nav[role="navigation"] input[placeholder*="Search" i],
+html.ie-active nav[role="navigation"] input[aria-label*="Search" i],
+html.ie-active nav[role="navigation"] input[type="search"] {
+    background: transparent !important;
+    color: rgb(var(--ig-primary-text)) !important;
+}
+
 html.ie-active .ie-chat-list {
     background: transparent !important;
 }
@@ -132,12 +152,17 @@ html.ie-active a[href*="/direct/t/"][aria-current="page"] {
 }
 
 html.ie-active .ie-composer-area {
-    padding-bottom: 10px;
+    padding: 0 0 10px 0 !important;
 }
 
 html.ie-active .ie-composer-shell {
     background: rgb(var(--ig-elevated-background)) !important;
     border: 1px solid rgb(var(--ig-separator)) !important;
+    padding: 0 14px !important;
+    min-height: 46px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
     transition:
         border-color var(--ie-fast) ease,
         background-color var(--ie-fast) ease !important;
@@ -155,6 +180,10 @@ html.ie-active .ie-composer-input * {
 
 html.ie-active .ie-composer-input {
     caret-color: var(--ie-accent) !important;
+    padding: 10px 0 !important;
+    margin: 0 !important;
+    line-height: 1.35 !important;
+    min-height: 24px !important;
 }
 
 html.ie-active .ie-bubble {
@@ -283,6 +312,8 @@ html.ie-active :focus-visible {
 html.ie-active .ie-nav-shell,
 html.ie-active .ie-chat-row,
 html.ie-active .ie-chat-item,
+html.ie-active .ie-search-shell,
+html.ie-active .ie-search-input,
 html.ie-active .ie-composer-shell,
 html.ie-active .ie-composer-input,
 html.ie-active .ie-bubble,
@@ -290,6 +321,10 @@ html.ie-active .ie-overlay,
 html.ie-active [role="menu"],
 html.ie-active [role="dialog"],
 html.ie-active [role="main"] div[style*="border-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-top-left-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-top-right-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-bottom-left-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-bottom-right-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
 html.ie-active button,
 html.ie-active input,
 html.ie-active textarea,
