@@ -465,6 +465,7 @@ function applyBubbleInlineColors(bubble, outgoing) {
     const incomingBg = asColor(themeMap['--chat-incoming-message-bubble-background-color']);
     const outgoingBg = asColor(themeMap['--chat-outgoing-message-bubble-background-color']);
     const incomingText = asColor(themeMap['--ig-primary-text']);
+    const incomingLink = asColor(themeMap['--ig-link']) || incomingText;
     const outgoingText = themeMap['--ie-outgoing-text-color'] || '#ffffff';
     const border = asColor(themeMap['--ig-separator']);
 
@@ -475,7 +476,9 @@ function applyBubbleInlineColors(bubble, outgoing) {
     });
 
     bubble.querySelectorAll('div[dir="auto"], span, a').forEach((node) => {
-        node.style.setProperty('color', outgoing ? outgoingText : incomingText, 'important');
+        const tagName = node.tagName ? node.tagName.toLowerCase() : '';
+        const scopedColor = !outgoing && tagName === 'a' ? incomingLink : (outgoing ? outgoingText : incomingText);
+        node.style.setProperty('color', scopedColor, 'important');
     });
 }
 
