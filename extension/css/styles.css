@@ -297,7 +297,283 @@ html.ie-active [aria-label*="typing" i] {
         opacity: 0;
     }
 
-    to {
+    /*
+    ===========================================
+        INSTAGRAM DIRECT ENHANCER - RETRO DARK
+    ===========================================
+    */
+
+    :root {
+        --ie-font-ui: "IBM Plex Sans", "Trebuchet MS", "Segoe UI", sans-serif;
+        --ie-font-mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+        --ie-fast: 150ms;
+        --ie-mid: 240ms;
+    }
+
+    html.ie-active {
+        --ie-accent: #d49b62;
+        --ie-accent-soft: rgba(212, 155, 98, 0.24);
+        --ie-bg-base: #12100d;
+        --ie-bg-panel: #1b1713;
+        --ie-bg-panel-2: #231d17;
+        --ie-bg-highlight: #2c251e;
+        --ie-border: #5b4b3a;
+        --ie-border-strong: #7c664f;
+        --ie-text: #f1e1c4;
+        --ie-text-soft: #c2a982;
+        --ie-text-muted: #998164;
+        --ie-outgoing-text-color: #fff3df;
+
+        /* Instagram runtime variables consumed by existing app styles. */
+        --ig-primary-background: 18, 16, 13;
+        --ig-secondary-background: 27, 23, 19;
+        --ig-elevated-background: 35, 29, 23;
+        --ig-highlight-background: 44, 37, 30;
+        --ig-primary-text: 241, 225, 196;
+        --ig-secondary-text: 194, 168, 132;
+        --ig-tertiary-text: 153, 129, 98;
+        --ig-primary-icon: 236, 219, 191;
+        --ig-secondary-icon: 177, 150, 119;
+        --ig-link: 232, 185, 117;
+        --ig-separator: 91, 75, 58;
+        --ig-stroke: 91, 75, 58;
+        --ig-menu-background-color: 28, 23, 18;
+        --ig-menu-text-color: 241, 225, 196;
+        --chat-incoming-message-bubble-background-color: #2b241d;
+        --chat-outgoing-message-bubble-background-color: #6a4a2f;
+        --ig-incoming-message-bubble: 43, 36, 29;
+        --ig-outgoing-message-bubble: 106, 74, 47;
+    }
+
+    html.ie-active,
+    html.ie-active body {
+        background-color: var(--ie-bg-base) !important;
+        color: var(--ie-text) !important;
+        font-family: var(--ie-font-ui) !important;
+    }
+
+    html.ie-active body {
+        text-rendering: geometricPrecision;
+        -webkit-font-smoothing: antialiased;
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+            radial-gradient(circle at 15% 8%, rgba(212, 155, 98, 0.06), transparent 36%),
+            radial-gradient(circle at 82% 16%, rgba(212, 155, 98, 0.05), transparent 34%),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.05));
+        background-size: 40px 40px, 40px 40px, auto, auto, auto;
+        background-attachment: fixed;
+    }
+
+    html.ie-active .ie-layout-root {
+        isolation: isolate;
+    }
+
+    html.ie-active .ie-layout-root::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.16) 100%);
+    }
+
+    html.ie-active .ie-thread-main,
+    html.ie-active [role="main"] {
+        background: transparent !important;
+    }
+
+    html.ie-active .ie-thread-header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 30 !important;
+        background: rgb(var(--ig-secondary-background)) !important;
+        border-bottom: 1px solid rgb(var(--ig-separator)) !important;
+        backdrop-filter: none !important;
+    }
+
+    html.ie-active .ie-thread-header [dir="auto"],
+    html.ie-active .ie-thread-header h1,
+    html.ie-active .ie-thread-header h2 {
+        font-family: var(--ie-font-mono) !important;
+        letter-spacing: 0.01em;
+    }
+
+    html.ie-active .ie-nav-shell,
+    html.ie-active nav[role="navigation"] {
+        background: rgb(var(--ig-elevated-background)) !important;
+        border-right: 1px solid rgb(var(--ig-separator)) !important;
+        opacity: 1 !important;
+    }
+
+    html.ie-active .ie-chat-list {
+        background: transparent !important;
+    }
+
+    html.ie-active .ie-chat-row,
+    html.ie-active .ie-chat-item {
+        border: 1px solid transparent !important;
+        transition:
+            background-color var(--ie-fast) ease,
+            border-color var(--ie-fast) ease,
+            color var(--ie-fast) ease !important;
+    }
+
+    html.ie-active .ie-chat-row:hover,
+    html.ie-active .ie-chat-item:hover {
+        background: rgb(var(--ig-secondary-background)) !important;
+        border-color: rgb(var(--ig-separator)) !important;
+    }
+
+    html.ie-active .ie-composer-area {
+        padding-bottom: 10px;
+    }
+
+    html.ie-active .ie-composer-shell {
+        background: rgb(var(--ig-elevated-background)) !important;
+        border: 1px solid rgb(var(--ig-separator)) !important;
+        transition:
+            border-color var(--ie-fast) ease,
+            background-color var(--ie-fast) ease !important;
+    }
+
+    html.ie-active .ie-composer-shell:focus-within {
+        border-color: var(--ie-accent) !important;
+        box-shadow: 0 0 0 2px var(--ie-accent-soft) !important;
+    }
+
+    html.ie-active .ie-composer-input,
+    html.ie-active .ie-composer-input * {
+        color: rgb(var(--ig-primary-text)) !important;
+    }
+
+    html.ie-active .ie-composer-input {
+        caret-color: var(--ie-accent) !important;
+    }
+
+    html.ie-active .ie-bubble {
+        border: 1px solid rgb(var(--ig-separator)) !important;
+        max-width: min(74ch, 76%) !important;
+        word-break: break-word;
+        transition:
+            background-color var(--ie-fast) ease,
+            border-color var(--ie-fast) ease !important;
+    }
+
+    html.ie-active .ie-bubble--in {
+        background: var(--chat-incoming-message-bubble-background-color) !important;
+        color: rgb(var(--ig-primary-text)) !important;
+    }
+
+    html.ie-active .ie-bubble--out {
+        background: var(--chat-outgoing-message-bubble-background-color) !important;
+        color: var(--ie-outgoing-text-color) !important;
+        border-color: var(--ie-border-strong) !important;
+    }
+
+    html.ie-active .ie-bubble a {
+        text-decoration-color: currentColor;
+    }
+
+    html.ie-active .ie-overlay,
+    html.ie-active [role="menu"],
+    html.ie-active [role="dialog"] {
+        background: rgb(var(--ig-menu-background-color)) !important;
+        border: 1px solid rgb(var(--ig-separator)) !important;
+        color: rgb(var(--ig-menu-text-color)) !important;
+        opacity: 1 !important;
+        backdrop-filter: none !important;
+    }
+
+    html.ie-active svg {
+        color: rgb(var(--ig-primary-icon)) !important;
+        transition: color var(--ie-fast) ease !important;
+    }
+
+    html.ie-active button:hover svg,
+    html.ie-active [role="button"]:hover svg,
+    html.ie-active a:hover svg {
+        color: var(--ie-accent) !important;
+    }
+
+    html.ie-active [role="main"] time,
+    html.ie-active [aria-label*="Seen" i],
+    html.ie-active [aria-label*="typing" i] {
+        color: rgb(var(--ig-secondary-text)) !important;
+    }
+
+    html.ie-active :focus-visible {
+        outline: 2px solid var(--ie-accent) !important;
+        outline-offset: 2px !important;
+    }
+
+    @keyframes ieBubbleInLeft {
+        from {
+            transform: translateX(-8px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes ieBubbleInRight {
+        from {
+            transform: translateX(8px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    html.ie-active .ie-bubble.ie-bubble-enter.ie-bubble--in {
+        animation: ieBubbleInLeft 0.24s ease-out both;
+    }
+
+    html.ie-active .ie-bubble.ie-bubble-enter.ie-bubble--out {
+        animation: ieBubbleInRight 0.24s ease-out both;
+    }
+
+    html.ie-active ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    html.ie-active ::-webkit-scrollbar-track {
+        background: rgb(var(--ig-secondary-background));
+    }
+
+    html.ie-active ::-webkit-scrollbar-thumb {
+        background: rgb(var(--ig-secondary-text));
+        border: 2px solid rgb(var(--ig-secondary-background));
+        border-radius: 0;
+    }
+
+    html.ie-active ::-webkit-scrollbar-thumb:hover {
+        background: var(--ie-accent);
+    }
+
+    @media (max-width: 980px) {
+        html.ie-active .ie-bubble {
+            max-width: min(62ch, 84%) !important;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html.ie-active *,
+        html.ie-active *::before,
+        html.ie-active *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
         transform: translateX(0) translateY(0);
         opacity: 1;
     }

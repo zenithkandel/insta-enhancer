@@ -1,9 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Insta Enhancer",
-  "version": "1.1.0",
-  "description": "Completely redesign the Instagram Direct Messaging UI to a modern vibe.",
-  "permissions": ["storage"],
+  "version": "1.2.0",
+  "description": "Retro dark redesign for Instagram Direct with sharp, high-contrast styling.",
   "host_permissions": ["https://www.instagram.com/*"],
   "action": {
     "default_popup": "popup/popup.html",

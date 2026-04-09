@@ -2,63 +2,115 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Insta Enhancer Settings</title>
+    <title>Insta Enhancer</title>
     <style>
+      :root {
+        --bg: #12100d;
+        --panel: #1b1713;
+        --panel-2: #241d16;
+        --border: #5b4b3a;
+        --text: #f1e1c4;
+        --muted: #c2a982;
+        --accent: #d49b62;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        width: 250px;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        padding: 16px;
-        background-color: #f2efe9; /* Beige theme from reference */
-        color: #1a1a1a;
-        border: 1px solid #1a1a1a;
+        margin: 0;
+        width: 296px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.016) 1px, transparent 1px),
+          linear-gradient(180deg, #14110d, #100d0a);
+        background-size: 28px 28px, 28px 28px, auto;
+        color: var(--text);
+        font-family: "IBM Plex Sans", "Trebuchet MS", "Segoe UI", sans-serif;
       }
-      h2 {
-        margin-top: 0;
-        font-size: 16px;
-        border-bottom: 2px solid #1a1a1a;
-        padding-bottom: 8px;
+
+      h1 {
+        margin: 0 0 6px;
+        font-size: 15px;
+        letter-spacing: 0.02em;
+        font-family: "IBM Plex Mono", Consolas, "Courier New", monospace;
       }
-      .setting-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
+
+      p {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
       }
-      select {
-        padding: 4px;
-        border: 1px solid #1a1a1a;
-        background: #fff;
-        border-radius: 4px;
+
+      .panel {
+        border: 1px solid var(--border);
+        background: var(--panel);
+        padding: 10px;
+        margin-bottom: 10px;
       }
-      .btn {
-        display: block;
+
+      .meta {
+        display: grid;
+        gap: 5px;
+        font-size: 12px;
+      }
+
+      .meta b {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .meta span {
+        color: var(--muted);
+      }
+
+      button {
         width: 100%;
-        padding: 8px;
-        background-color: #a45a3f; /* Orange accent */
-        color: white;
-        border: 2px solid #1a1a1a;
+        border: 1px solid #8e6f4d;
+        background: linear-gradient(180deg, #7f5b3a, #66472d);
+        color: #fff5e5;
+        padding: 9px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
         cursor: pointer;
-        font-weight: bold;
-        text-align: center;
       }
-      .btn:hover {
-        background-color: #8a4831;
+
+      button:hover {
+        background: linear-gradient(180deg, #906643, #715033);
+      }
+
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      #status {
+        min-height: 16px;
+        margin-top: 8px;
+        font-size: 11px;
+        color: var(--muted);
       }
     </style>
   </head>
   <body>
-    <h2>Enhancer Settings</h2>
-    <div class="setting-row">
-      <label for="themeSelect">Theme</label>
-      <select id="themeSelect">
-        <option value="minimal-beige">Minimal Beige</option>
-        <option value="dark-glass">Dark Glass</option>
-        <option value="cyberpunk">Cyberpunk</option>
-        <option value="default">Default</option>
-      </select>
+    <h1>Retro Dark Theme</h1>
+    <p>Single-theme mode is enabled. This extension now always uses the retro dark style.</p>
+
+    <div class="panel" aria-label="Theme summary">
+      <div class="meta"><b>Theme:</b> <span>Retro Dark Beige</span></div>
+      <div class="meta"><b>Corners:</b> <span>Sharp</span></div>
+      <div class="meta"><b>Contrast:</b> <span>High</span></div>
     </div>
-    <button id="saveBtn" class="btn">Apply Changes</button>
+
+    <button id="applyBtn" type="button">Reapply To Current DM Tab</button>
+    <div id="status" aria-live="polite"></div>
+
     <script src="popup.js"></script>
   </body>
 </html>

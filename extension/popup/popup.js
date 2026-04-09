@@ -1,41 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const themeSelect = document.getElementById('themeSelect');
-    const saveBtn = document.getElementById('saveBtn');
+    const applyBtn = document.getElementById('applyBtn');
+    const status = document.getElementById('status');
 
-    chrome.storage.local.get(['theme'], (result) => {
-        if (result && result.theme) {
-            themeSelect.value = result.theme;
-        }
-    });
+    if (!applyBtn || !status) {
+        return;
+    }
 
-    saveBtn.addEventListener('click', () => {
-        const selectedTheme = themeSelect.value;
-        chrome.storage.local.set({ theme: selectedTheme }, () => {
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                const activeTab = tabs && tabs.length > 0 ? tabs[0] : null;
-                if (!activeTab || !activeTab.id) {
+    applyBtn.addEventListener('click', () => {
+        status.textContent = '';
+
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs && tabs.length > 0 ? tabs[0] : null;
+            if (!activeTab || !activeTab.id) {
+                status.textContent = 'No active tab found.';
+                return;
+            }
+
+            const currentUrl = activeTab.url || '';
+            if (!currentUrl.includes('instagram.com/direct/')) {
+                status.textContent = 'Open Instagram Direct, then try again.';
+                return;
+            }
+
+            chrome.tabs.sendMessage(activeTab.id, { action: 'applyRetroTheme' }, () => {
+                if (chrome.runtime.lastError) {
+                    status.textContent = 'Tab is still loading. Retry in a second.';
                     return;
                 }
 
-                const currentUrl = activeTab.url || '';
-                if (!currentUrl.includes('instagram.com/direct/')) {
-                    return;
-                }
-
-                chrome.tabs.sendMessage(
-                    activeTab.id,
-                    { action: 'changeTheme', theme: selectedTheme },
-                    () => {
-                        // Ignore delivery errors (e.g., page still loading content script).
-                        void chrome.runtime.lastError;
-                    }
-                );
+                status.textContent = 'Retro dark theme applied.';
             });
-
-            saveBtn.textContent = 'Saved!';
-            setTimeout(() => {
-                saveBtn.textContent = 'Apply Changes';
-            }, 1200);
         });
     });
 });
