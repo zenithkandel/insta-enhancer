@@ -1,12 +1,6 @@
 const APP_CLASS = 'ie-active';
 const THEME_ATTRIBUTE = 'data-ie-theme';
 const THEME_NAME = 'retro-dark-beige';
-const LEGACY_ROOT_CLASSES = [
-    'enhancer-active',
-    'enhancer-theme-minimal-beige',
-    'enhancer-theme-dark-glass',
-    'enhancer-theme-cyberpunk'
-];
 
 const RETRO_THEME_VARIABLES = {
     '--accent': '#d49b62',
@@ -54,7 +48,7 @@ function bootstrap() {
             return;
         }
 
-        if (request.action === 'applyRetroTheme' || request.action === 'changeTheme') {
+        if (request.action === 'applyRetroTheme') {
             applyRetroTheme();
         }
     });
@@ -66,7 +60,12 @@ function bootstrap() {
 function applyRetroTheme() {
     const root = document.documentElement;
 
-    LEGACY_ROOT_CLASSES.forEach((className) => root.classList.remove(className));
+    root.classList.remove('enhancer-active');
+    Array.from(root.classList).forEach((className) => {
+        if (className.startsWith('enhancer-theme-')) {
+            root.classList.remove(className);
+        }
+    });
 
     root.classList.add(APP_CLASS);
     root.setAttribute(THEME_ATTRIBUTE, THEME_NAME);
