@@ -107,7 +107,11 @@ html.ie-active nav[role="navigation"] {
 html.ie-active .ie-search-shell,
 html.ie-active nav[role="navigation"] input[placeholder*="Search" i],
 html.ie-active nav[role="navigation"] input[aria-label*="Search" i],
-html.ie-active nav[role="navigation"] input[type="search"] {
+html.ie-active nav[role="navigation"] input[type="search"],
+html.ie-active input[placeholder*="Search" i],
+html.ie-active input[aria-label*="Search" i],
+html.ie-active input[type="search"],
+html.ie-active [role="search"] input {
     border-radius: 0 !important;
 }
 
@@ -119,7 +123,11 @@ html.ie-active .ie-search-shell {
 html.ie-active .ie-search-input,
 html.ie-active nav[role="navigation"] input[placeholder*="Search" i],
 html.ie-active nav[role="navigation"] input[aria-label*="Search" i],
-html.ie-active nav[role="navigation"] input[type="search"] {
+html.ie-active nav[role="navigation"] input[type="search"],
+html.ie-active input[placeholder*="Search" i],
+html.ie-active input[aria-label*="Search" i],
+html.ie-active input[type="search"],
+html.ie-active [role="search"] input {
     background: transparent !important;
     color: rgb(var(--ig-primary-text)) !important;
 }
@@ -325,6 +333,10 @@ html.ie-active [role="main"] div[style*="border-top-left-radius"]:not([style*="5
 html.ie-active [role="main"] div[style*="border-top-right-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
 html.ie-active [role="main"] div[style*="border-bottom-left-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
 html.ie-active [role="main"] div[style*="border-bottom-right-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-start-start-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-start-end-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-end-start-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
+html.ie-active [role="main"] div[style*="border-end-end-radius"]:not([style*="50%"]):not([style*="999"]):not([style*="100%"]),
 html.ie-active button,
 html.ie-active input,
 html.ie-active textarea,

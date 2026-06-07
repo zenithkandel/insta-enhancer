@@ -147,6 +147,7 @@ function enforceUI() {
     }
 
     tagNavigationShell();
+    flattenSidebarCorners();
     tagChatList();
     tagComposer(main);
     flattenComposerCorners(main);
@@ -205,10 +206,7 @@ function findChatRowAncestor(node) {
 }
 
 function tagComposer(main) {
-    const textBox =
-        main.querySelector('div[role="textbox"][contenteditable="true"]') ||
-        main.querySelector('div[role="textbox"]') ||
-        main.querySelector('[contenteditable="true"][aria-label*="Message" i]');
+    const textBox = getComposerTextBox(main);
 
     if (!textBox) {
         return;
@@ -225,6 +223,40 @@ function tagComposer(main) {
     if (area) {
         area.classList.add('ie-composer-area');
     }
+}
+
+function getComposerTextBox(main) {
+    const candidates = Array.from(
+        main.querySelectorAll('div[role="textbox"][contenteditable="true"], div[role="textbox"], [contenteditable="true"][aria-label*="Message" i]')
+    ).filter((node) => {
+        if (!node || !node.isConnected) {
+            return false;
+        }
+
+        const label = ((node.getAttribute('aria-label') || '') + ' ' + (node.getAttribute('placeholder') || '')).toLowerCase();
+        if (label.includes('search')) {
+            return false;
+        }
+
+        return !node.closest('[role="dialog"], [role="menu"]');
+    });
+
+    if (candidates.length === 0) {
+        return null;
+    }
+
+    let selected = candidates[candidates.length - 1];
+    let maxBottom = -1;
+
+    candidates.forEach((node) => {
+        const rect = node.getBoundingClientRect();
+        if (rect.bottom > maxBottom) {
+            maxBottom = rect.bottom;
+            selected = node;
+        }
+    });
+
+    return selected;
 }
 
 function findComposerShell(textBox, boundary) {
@@ -275,9 +307,7 @@ function tagOverlaySurfaces() {
 }
 
 function flattenComposerCorners(main) {
-    const textBox =
-        main.querySelector('div[role="textbox"][contenteditable="true"]') ||
-        main.querySelector('div[role="textbox"]');
+    const textBox = getComposerTextBox(main);
 
     if (!textBox) {
         return;
@@ -291,9 +321,7 @@ function flattenComposerCorners(main) {
 }
 
 function normalizeComposerSpacing(main) {
-    const textBox =
-        main.querySelector('div[role="textbox"][contenteditable="true"]') ||
-        main.querySelector('div[role="textbox"]');
+    const textBox = getComposerTextBox(main);
 
     if (!textBox) {
         return;
@@ -330,7 +358,7 @@ function normalizeComposerSpacing(main) {
 
 function styleSearchBar() {
     const searchInputs = document.querySelectorAll(
-        'nav[role="navigation"] input[placeholder*="Search" i], nav[role="navigation"] input[aria-label*="Search" i], nav[role="navigation"] input[type="search"]'
+        'input[placeholder*="Search" i], input[aria-label*="Search" i], input[type="search"], [role="search"] input'
     );
 
     const separator = asColor(RETRO_THEME_VARIABLES['--ig-separator']);
@@ -338,18 +366,24 @@ function styleSearchBar() {
     const textColor = asColor(RETRO_THEME_VARIABLES['--ig-primary-text']);
 
     searchInputs.forEach((input) => {
+        const inputRect = input.getBoundingClientRect();
+        if (!inputRect.width || inputRect.left > window.innerWidth * 0.55) {
+            return;
+        }
+
         input.classList.add('ie-search-input');
 
         let shell = null;
         let cursor = input;
-        for (let depth = 0; depth < 7 && cursor; depth += 1) {
+        for (let depth = 0; depth < 8 && cursor; depth += 1) {
             const rect = cursor.getBoundingClientRect();
-            if (rect.width > 160 && rect.width < 520 && rect.height >= 30 && rect.height <= 90) {
+            const inSidebar = rect.left < window.innerWidth * 0.55;
+            if (inSidebar && rect.width > 130 && rect.width < 620 && rect.height >= 28 && rect.height <= 96) {
                 shell = cursor;
             }
 
             cursor = cursor.parentElement;
-            if (cursor && cursor.matches('nav[role="navigation"]')) {
+            if (!cursor || cursor.matches('body, html')) {
                 break;
             }
         }
@@ -368,6 +402,36 @@ function styleSearchBar() {
             'background-color': 'transparent',
             color: textColor
         });
+    });
+}
+
+function flattenSidebarCorners() {
+    const candidates = document.querySelectorAll(
+        'nav[role="navigation"] div[style*="radius"], nav[role="navigation"] span[style*="radius"], div[role="listbox"] div[style*="radius"], div[role="listbox"] span[style*="radius"]'
+    );
+
+    let applied = 0;
+    candidates.forEach((node) => {
+        if (applied > 180) {
+            return;
+        }
+
+        const styleText = (node.getAttribute('style') || '').toLowerCase();
+        if (!styleText || /50%|999|100%/.test(styleText)) {
+            return;
+        }
+
+        const rect = node.getBoundingClientRect();
+        if (!rect.width || !rect.height || rect.left > window.innerWidth * 0.55) {
+            return;
+        }
+
+        if (rect.width < 24 || rect.height < 14) {
+            return;
+        }
+
+        node.style.setProperty('border-radius', '0px', 'important');
+        applied += 1;
     });
 }
 
@@ -410,6 +474,8 @@ function tagMessageBubbles(main) {
             if (textNode.closest('div[role="textbox"]')) {
                 return;
             }
+
+            flattenMessageAncestors(textNode, row);
 
             const bubble = findBubbleElement(row, textNode);
             if (!bubble) {
@@ -476,6 +542,28 @@ function forceMessageCornerFlatten(main) {
             }
         });
     });
+}
+
+function flattenMessageAncestors(textNode, row) {
+    let cursor = textNode;
+
+    for (let depth = 0; depth < 6 && cursor; depth += 1) {
+        if (cursor === row || cursor === row.parentElement) {
+            break;
+        }
+
+        if (cursor.matches && cursor.matches('svg, path, circle, ellipse, img, video, canvas')) {
+            cursor = cursor.parentElement;
+            continue;
+        }
+
+        const rect = cursor.getBoundingClientRect();
+        if (rect.width >= 18 && rect.height >= 12) {
+            cursor.style.setProperty('border-radius', '0px', 'important');
+        }
+
+        cursor = cursor.parentElement;
+    }
 }
 
 function findBubbleElement(row, textNode) {
